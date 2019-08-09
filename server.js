@@ -101,10 +101,12 @@ const people = [
   }
 ];
 
+//Get all chores
 server.get("/chores", (req, res) => {
   res.status(200).json(chores);
 });
 
+//Delete a psecific chore using its ID
 server.delete("/chores/:id", (req, res) => {
   const choreId = Number(req.params.id);
   let deletedChore = chores.filter(chore => chore.id === choreId);
@@ -116,14 +118,21 @@ server.delete("/chores/:id", (req, res) => {
   res.status(200).json(deletedChore);
 });
 
-server.post("/chores/:id", (req, res) => {
-  const choreId = Number(req.params.id);
+// Add a new chore, automatically increments ID based on array length
+server.post("/chores/", (req, res) => {
   const newChore = req.body;
   newChore.id = chores.length + 1;
   chores.push(newChore);
   res.status(201).json(newChore);
 });
 
+//Update a chore using its ID
+server.put("/chores/:id", (req, res) => {
+  const choreId = Number(req.params.id);
+  const updatedChore = req.body;
+});
+
+//Get all people
 server.get("/people", (req, res) => {
   res.status(200).json(people);
 });
