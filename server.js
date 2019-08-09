@@ -126,7 +126,7 @@ server.post("/chores/", (req, res) => {
   res.status(201).json(newChore);
 });
 
-//Update a chore using its ID
+//Update a chore using its ID, using supplied body to make changes
 server.put("/chores/:id", (req, res) => {
   const choreId = Number(req.params.id);
   const updatedChoreInfo = req.body;
@@ -149,6 +149,12 @@ server.put("/chores/:id", (req, res) => {
 //Get all people
 server.get("/people", (req, res) => {
   res.status(200).json(people);
+});
+
+server.get("/people/:id/chores", (req, res) => {
+  const personId = Number(req.params.id);
+  let personsChores = chores.filter(chore => chore.assignedTo === personId);
+  res.status(200).json(personsChores);
 });
 
 module.exports = server;
