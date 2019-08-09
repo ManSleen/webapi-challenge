@@ -40,13 +40,23 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
 
 - [ ] Mention two parts of Express that you learned about this week.
 
+**This week I learned that Express can handle routing just like React Router and that middleware is awesome and can be customized to specific needs!**
+
 - [ ] What is Express Middleware?
+
+**Middleware in Express are like small, specific programs we can use to add more functionality to Express. The 3 main types of middleware are built-in middleware that’s included with Express, third-party middleware such as npm modules that other developers have already made and custom middleware that we can make ourselves to serve some specific purpose.**
 
 - [ ] How can a client send data to an API?
 
+**We can send data to an API through the use of its endpoints and the type of request we send. We can include information in the “body” of the request, in the URL as in the case of an ID, or with query parameters on the end of the URL.**
+
 - [ ] What can the API return to help clients know if a request was successful?
 
+**The API can return HTTP status codes to let the client know if a request was successful or not. Some common HTTP codes are: “200” meaning everything went well, “400” meaning bad request, and “500” meaning there was an internal server error. There are more specific codes we can use to narrow down what went wrong or right.**
+
 - [ ] What Express feature can we use to partition an application into sub-applications?
+
+**We can use Express Routers to break up our app into smaller, more specific, more manageable parts. This makes our app more robust, easier to manage/change and much more modular.**
 
 ## Minimum Viable Product
 
