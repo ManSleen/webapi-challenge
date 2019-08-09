@@ -2,6 +2,8 @@ const express = require("express");
 
 const server = express();
 
+server.use(express.json());
+
 let chores = [
   {
     id: 1,
@@ -111,8 +113,15 @@ server.delete("/chores/:id", (req, res) => {
       return chore;
     }
   });
-
   res.status(200).json(deletedChore);
+});
+
+server.post("/chores/:id", (req, res) => {
+  const choreId = Number(req.params.id);
+  const newChore = req.body;
+  newChore.id = chores.length + 1;
+  chores.push(newChore);
+  res.status(201).json(newChore);
 });
 
 server.get("/people", (req, res) => {
