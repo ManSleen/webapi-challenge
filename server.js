@@ -2,7 +2,7 @@ const express = require("express");
 
 const server = express();
 
-const chores = [
+let chores = [
   {
     id: 1,
     description: "Go and do this thing",
@@ -101,6 +101,18 @@ const people = [
 
 server.get("/chores", (req, res) => {
   res.status(200).json(chores);
+});
+
+server.delete("/chores/:id", (req, res) => {
+  const choreId = Number(req.params.id);
+  let deletedChore = chores.filter(chore => chore.id === choreId);
+  chores = chores.filter(chore => {
+    if (chore.id !== choreId) {
+      return chore;
+    }
+  });
+
+  res.status(200).json(deletedChore);
 });
 
 server.get("/people", (req, res) => {
