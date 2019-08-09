@@ -129,7 +129,21 @@ server.post("/chores/", (req, res) => {
 //Update a chore using its ID
 server.put("/chores/:id", (req, res) => {
   const choreId = Number(req.params.id);
-  const updatedChore = req.body;
+  const updatedChoreInfo = req.body;
+
+  chores = chores.map(chore => {
+    if (chore.id === choreId) {
+      chore = updatedChoreInfo;
+      chore.id = choreId;
+      return chore;
+    } else {
+      return chore;
+    }
+  });
+
+  let updatedChore = chores.filter(chore => chore.id === choreId);
+
+  res.status(200).json(updatedChore);
 });
 
 //Get all people
