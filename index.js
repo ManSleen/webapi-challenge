@@ -1,7 +1,7 @@
-const server = require('./server');
+const server = require("./server");
 
-const port = 8090;
+const port = process.env.PORT || 8090;
 
 server.listen(port, () => {
-    console.log(`\nAPI is running strong on port ${port}\n`)
-})
+  console.log(`\nAPI is running strong on port ${port}\n`);
+});
