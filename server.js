@@ -31,14 +31,14 @@ let chores = [
     description: "Go and do this thing",
     notes: "Don't come home til you do",
     assignedTo: 3,
-    completed: false
+    completed: true
   },
   {
     id: 5,
     description: "Go and do this thing",
     notes: "Don't come home til you do",
     assignedTo: 2,
-    completed: false
+    completed: true
   },
   {
     id: 6,
@@ -59,7 +59,7 @@ let chores = [
     description: "Go and do this thing",
     notes: "Don't come home til you do",
     assignedTo: 7,
-    completed: false
+    completed: true
   },
   {
     id: 9,
@@ -70,7 +70,7 @@ let chores = [
   }
 ];
 
-const people = [
+let people = [
   {
     id: 1,
     name: "Mike VanSleen"
@@ -103,7 +103,16 @@ const people = [
 
 //Get all chores
 server.get("/chores", (req, res) => {
-  res.status(200).json(chores);
+  console.log(req.query.completed);
+  if (req.query.completed === "true") {
+    let completedChores = chores.filter(chore => chore.completed === true);
+    res.status(200).json(completedChores);
+  } else if (req.query.completed === "false") {
+    let unCompletedChores = chores.filter(chore => chore.completed !== true);
+    res.status(200).json(unCompletedChores);
+  } else {
+    res.status(200).json(chores);
+  }
 });
 
 //Delete a psecific chore using its ID
