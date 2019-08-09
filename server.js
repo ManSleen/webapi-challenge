@@ -101,9 +101,11 @@ let people = [
   }
 ];
 
+//******** CHORES OPERATIONS BELOW! ***************
+
 //Get all chores
+//Use query params to filter completed todos
 server.get("/chores", (req, res) => {
-  console.log(req.query.completed);
   if (req.query.completed === "true") {
     let completedChores = chores.filter(chore => chore.completed === true);
     res.status(200).json(completedChores);
@@ -128,11 +130,27 @@ server.delete("/chores/:id", (req, res) => {
 });
 
 // Add a new chore, automatically increments ID based on array length
-server.post("/chores/", (req, res) => {
+//Supply person's ID in URL params to add to that person's chores
+server.post("/chores/:id", (req, res) => {
   const newChore = req.body;
+  const personId = Number(req.params.id);
   newChore.id = chores.length + 1;
-  chores.push(newChore);
-  res.status(201).json(newChore);
+  newChore.assignedTo = personId;
+
+  if (newChore.description) {
+    if (!newChore.hasOwnProperty("completed")) {
+      newChore.completed = false;
+      chores.push(newChore);
+      res.status(201).json(newChore);
+    } else {
+      chores.push(newChore);
+      res.status(201).json(newChore);
+    }
+  } else {
+    res
+      .status(400)
+      .json({ message: "You must supply a description to add a chore" });
+  }
 });
 
 //Update a chore using its ID, using supplied body to make changes
@@ -155,6 +173,8 @@ server.put("/chores/:id", (req, res) => {
   res.status(200).json(updatedChore);
 });
 
+//******** PEOPLE OPERATIONS BELOW! ***************
+
 //Get all people
 server.get("/people", (req, res) => {
   res.status(200).json(people);
@@ -176,7 +196,12 @@ server.post("/people", (req, res) => {
   const newPersonId = people.length + 1;
   const newPersonInfo = req.body;
   newPersonInfo.id = newPersonId;
-  people.push(newPersonInfo);
+  if (newPersonInfo.name) {
+    people.push(newPersonInfo);
+    res.status(200).json(newPersonInfo);
+  } else {
+    res.status(400).json({ message: "You must supply a name for a user!" });
+  }
 });
 
 module.exports = server;
