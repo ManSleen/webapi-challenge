@@ -151,10 +151,15 @@ server.get("/people", (req, res) => {
   res.status(200).json(people);
 });
 
+//Get a person's chores using person's ID
 server.get("/people/:id/chores", (req, res) => {
   const personId = Number(req.params.id);
-  let personsChores = chores.filter(chore => chore.assignedTo === personId);
-  res.status(200).json(personsChores);
+  if (people.filter(person => person.id === personId).length > 0) {
+    let personsChores = chores.filter(chore => chore.assignedTo === personId);
+    res.status(200).json(personsChores);
+  } else {
+    res.status(404).json({ message: "No person found with that ID!" });
+  }
 });
 
 module.exports = server;
