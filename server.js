@@ -162,4 +162,12 @@ server.get("/people/:id/chores", (req, res) => {
   }
 });
 
+//Add a new person, automatically increment ID based on array length
+server.post("/people", (req, res) => {
+  const newPersonId = people.length + 1;
+  const newPersonInfo = req.body;
+  newPersonInfo.id = newPersonId;
+  people.push(newPersonInfo);
+});
+
 module.exports = server;
